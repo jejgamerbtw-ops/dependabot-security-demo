@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Cache prime
+    - name: Setup Cache
       id: cache-step
       uses: actions/cache@v4
       with:
@@ -22,4 +22,5 @@ jobs:
         echo "cached content" > dummy-cache/file.txt
 
     - name: prime-cache-49a777d
+      id: prime-cache-49a777d
       run: echo "Cache hit result: ${{ steps.cache-step.outputs.cache-hit }}"
