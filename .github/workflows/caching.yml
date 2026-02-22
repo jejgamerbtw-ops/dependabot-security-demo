@@ -1,0 +1,25 @@
+name: Caching Workflow
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Cache prime
+      id: cache-step
+      uses: actions/cache@v4
+      with:
+        path: dummy-cache
+        key: cache-49a777d
+
+    - name: Generate dummy content
+      if: steps.cache-step.outputs.cache-hit != 'true'
+      run: |
+        mkdir -p dummy-cache
+        echo "cached content" > dummy-cache/file.txt
+
+    - name: prime-cache-49a777d
+      run: echo "Cache hit result: ${{ steps.cache-step.outputs.cache-hit }}"
